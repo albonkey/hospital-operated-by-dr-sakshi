@@ -1,5 +1,5 @@
 # Welcome to Sakshi's Hospital
-Where all of Mello's Victims end up.
+Where all of Mello's victims end up.
 
 
 ## Getting started
