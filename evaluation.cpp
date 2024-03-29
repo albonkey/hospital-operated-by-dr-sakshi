@@ -4,11 +4,9 @@
 
 void start_evaluation(SimulationState& state) {
     // If there are patients in the emergency queue
-    if (!state.emergency_queue.empty()) {
+    if (!state.evaluation_queue.empty()) {
         // Get the next patient from the emergency queue
-        Patient patient = state.emergency_queue.front();
-        state.emergency_queue.pop();
-        state.patients_in_E_queue_counter--;
+        Patient patient = state.evaluation_queue.front();
         double evaluation_time = generate_evaluation_time(state.mu_e);
         state.total_response_time += evaluation_time;
         

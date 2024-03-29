@@ -39,7 +39,7 @@ struct SimulationState {
 
     priority_queue<Event, vector<Event>, greater<Event> > event_list;
 
-    queue<Patient> emergency_queue;
+    queue<Patient> evaluation_queue;
 
     priority_queue<Patient, vector<Patient>, ComparePatients> patient_priority_queue;
 

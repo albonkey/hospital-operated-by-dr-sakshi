@@ -13,6 +13,7 @@ void wait_cleanup(SimulationState& state) {
 }
 
 void start_cleanup(SimulationState& state) {
+    cout << "Start Cleanup" << endl;
     if (state.janitors_available > 0 && state.rooms_waiting_cleanup > 0) {
         // Decrement the count of available janitors
         state.janitors_available--;
@@ -35,7 +36,9 @@ void start_cleanup(SimulationState& state) {
 
 void end_cleanup(SimulationState& state) {
     state.janitors_available++;
+    state.rooms_available++;
     double cleanup_time = state.cleanup_times.front(); 
     state.total_cleanup_time += cleanup_time;
+    state.event_list.push(Event(state.current_time, "start_treatment"));
     std::cout << "End of fn 9" << std::endl;
 }
