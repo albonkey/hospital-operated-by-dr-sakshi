@@ -6,13 +6,6 @@
 using namespace std;
 
 void arrival(SimulationState& state) {
-    // Generate next arrival time
-    double interarrival_time = generate_interarrival_time(state.lambda_val);
-    state.current_time += interarrival_time;
-    state.arrival_times.push_back(state.current_time);
-    state.event_list.push(Event(state.current_time, "arrival"));
-    
-    // If department is at full capacity, drop the arrival
     if (state.patients_in_system >= state.B) {
         state.patients_dropped++;
         state.event_list.push(Event(state.current_time, "depart_E_queue"));

@@ -18,7 +18,7 @@ void start_treatment(SimulationState& state) {
       
         // Generate treatment time based on priority
         double treatment_time = generate_treatment_time(patient.priority, state.mu_t);
-        
+        cout << "Treatment time: " << treatment_time << endl;
         // Schedule treatment completion event
         state.event_list.push(Event(state.current_time + treatment_time, "complete_treatment", patient));
     }
@@ -29,14 +29,14 @@ void start_treatment(SimulationState& state) {
 }
 
 void complete_treatment(Patient& patient, SimulationState& state) {
-    // Increment total departures
     state.total_departures++;
     state.rooms_waiting_cleanup++;
-    // Calculate response time
+    
     double response_time = state.current_time - patient.arrivalTime;
+    state.response_times.push_back(response_time);
     state.total_response_time += response_time;
 
-    // Record departure time
+    
     state.departure_times.push_back(state.current_time);
     
     state.event_list.push(Event(state.current_time, "wait_cleanup"));

@@ -21,6 +21,11 @@ void simulate(double lambda_val, double mu_e, double mu_t, double mu_c, int B, i
     initialize_generator(S);
     SimulationState state = SimulationState(lambda_val, mu_e, mu_t, mu_c, B, R, m1, m2, S);
     int round = 0;
+
+    // When to add next time
+    double interarrival_time = generate_interarrival_time(lambda_val);
+    double nextArrivalTime = state.current_time + interarrival_time;
+
     while (!state.event_list.empty() && state.current_time < 18000 && round < 40) {
         Event next_event = state.event_list.top();
 
@@ -54,8 +59,17 @@ void simulate(double lambda_val, double mu_e, double mu_t, double mu_c, int B, i
         else if (next_event.type == "end_cleanup") {
             end_cleanup(state);
         }
+        
+        if (state.current_time >= nextArrivalTime) {
+            interarrival_time = generate_interarrival_time(lambda_val);
+            nextArrivalTime = state.current_time + interarrival_time;
+            state.arrival_times.push_back(state.current_time);
+            state.event_list.push(Event(nextArrivalTime, "arrival"));
+        }
+
         round += 1;
         // Debug output
+        cout << "Departures: " << state.total_departures << endl;
         cout << "Current Time: " << state.current_time << ", Event Type: " << next_event.type << endl;
         cout << "Nr of patients in system " << state.patients_in_E_queue_counter + state.patients_in_P_queue_counter + (state.R - state.rooms_available) << endl;
         cout << "Nr of events on list " << state.event_list.size() << endl;
@@ -74,11 +88,12 @@ void simulate(double lambda_val, double mu_e, double mu_t, double mu_c, int B, i
     double mean_cleanup_time = (state.R > 0 && state.total_departures > 0) ? state.total_cleanup_time / (state.R * state.total_departures) : 0;
     
     // Calculate and print statistics
+    cout << "Total patients in system = " << total_patients_in_system << endl;
     cout << "Departures = " << state.total_departures << endl;
     cout << "Mean_num_patients = " << mean_num_patients << endl;
-    cout << "Mean_response_time = " << mean_response_time/60 << endl;
-    cout << "Mean_wait_E_queue = " << mean_wait_E_queue/60 << endl;
-    cout << "Mean_wait_P_queue = " << mean_wait_P_queue/60 << endl;
-    cout << "Mean_cleanup_time = " << mean_cleanup_time/60 << endl;
+    cout << "Mean_response_time = " << mean_response_time << endl;
+    cout << "Mean_wait_E_queue = " << mean_wait_E_queue << endl;
+    cout << "Mean_wait_P_queue = " << mean_wait_P_queue << endl;
+    cout << "Mean_cleanup_time = " << mean_cleanup_time << endl;
     cout << "Dropped_arrivals = " << state.patients_dropped << endl;
 }

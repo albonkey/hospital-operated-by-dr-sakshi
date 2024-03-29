@@ -35,8 +35,7 @@ void start_cleanup(SimulationState& state) {
 
 void end_cleanup(SimulationState& state) {
     state.janitors_available++;
-    // Update total cleanup time including wait time
-    double cleanup_time = state.cleanup_times.front(); // Get the cleanup time
-    state.total_cleanup_time += cleanup_time; // Update total cleanup time
+    double cleanup_time = state.cleanup_times.front(); 
+    state.total_cleanup_time += cleanup_time;
     std::cout << "End of fn 9" << std::endl;
 }
