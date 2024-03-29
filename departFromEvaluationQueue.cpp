@@ -1,5 +1,5 @@
 #include <iostream>
-#include "departFromEmergencyQueue.h"
+#include "departFromEvaluationQueue.h"
 #include "Patient.h"
 #include "SimulationState.h"
 

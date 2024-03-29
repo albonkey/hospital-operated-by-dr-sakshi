@@ -8,7 +8,7 @@ void start_evaluation(SimulationState& state) {
         // Get the next patient from the emergency queue
         Patient patient = state.emergency_queue.front();
         state.emergency_queue.pop();
-
+        state.patients_in_E_queue_counter--;
         double evaluation_time = generate_evaluation_time(state.mu_e);
         state.total_response_time += evaluation_time;
         
@@ -17,8 +17,6 @@ void start_evaluation(SimulationState& state) {
         // Update patient's priority
         patient.priority = priority;
 
-        // Increment patients in P queue
-        state.patients_in_P_queue_counter++;
         // Schedule arrival at P queue event
         state.event_list.push(Event(state.current_time + evaluation_time, "depart_from_E_queue", patient));
     }

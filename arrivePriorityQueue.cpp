@@ -4,7 +4,7 @@
 #include "SimulationState.h"
 
 void arrive_P_queue(Patient& patient, SimulationState& state) {
-    state.patients_in_P_queue_counter--;
+    state.patients_in_P_queue_counter++;
     state.patient_priority_queue.push(patient);
     state.total_wait_P_queue += state.current_time - patient.arrivalTime;
    

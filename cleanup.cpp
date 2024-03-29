@@ -17,7 +17,7 @@ void start_cleanup(SimulationState& state) {
         // Decrement the count of available janitors
         state.janitors_available--;
         
-        // Increment the count of rooms currently being cleaned
+        // Decrement the count of rooms currently being cleaned
         state.rooms_waiting_cleanup--;
         
         // Generate cleanup time
