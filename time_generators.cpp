@@ -12,20 +12,22 @@ void initialize_generator(double seed) {
 }
 
 double generate_interarrival_time(double lambda_val) {
-    return 1.0 / lambda_val;
+    exponential_distribution<double> distribution(lambda_val);
+    return distribution(generator);
 }
 
 double generate_evaluation_time(double mu_e) {
-    return 1 / mu_e;
+    exponential_distribution<double> distribution(mu_e);
+    return distribution(generator);
 }
 
 double generate_treatment_time(double priority, double mu_t) {
     double mu = priority > 0.5 ? mu_t : mu_t * 2;
-    return 1 / mu;
-
+    exponential_distribution<double> distribution(mu);
+    return distribution(generator);
 }
 
 double generate_cleanup_time(double mu_c) {
-    const double cleanup_time = 1 / mu_c;
-    return cleanup_time;
+    exponential_distribution<double> distribution(mu_c);
+    return distribution(generator);
 }
