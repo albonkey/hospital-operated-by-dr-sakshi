@@ -39,6 +39,8 @@ void end_cleanup(SimulationState& state) {
     state.rooms_available++;
     double cleanup_time = state.cleanup_times.front(); 
     state.total_cleanup_time += cleanup_time;
-    state.event_list.push(Event(state.current_time, "start_treatment"));
+    if (state.patients_in_P_queue_counter > 0) {
+        state.event_list.push(Event(state.current_time, "start_treatment"));
+    }
     std::cout << "End of fn 9" << std::endl;
 }
